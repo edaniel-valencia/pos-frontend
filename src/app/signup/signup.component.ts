@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-signup',
-  standalone: true,
-  imports: [RouterLink, RouterLinkActive],
-  templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css'
+    selector: 'app-signup',
+    imports: [RouterLink],
+    templateUrl: './signup.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrl: './signup.component.css'
 })
 export class SignupComponent {
 

@@ -1,5 +1,8 @@
 export interface Product{
     Pid: number,
     Pname: string,
-    Pdescription: string
+    Pdescription: string,
+    Pprice?: number,
+    Pstock?: number,
+    Pcategory?: string
 }

@@ -1,0 +1,83 @@
+<div class="space-y-4">
+  <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Reportes de ventas</h1>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Ingresos totales</p>
+      <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{{ '$' + totalRevenue().toFixed(2) }}</p>
+    </div>
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Subtotal (sin IVA)</p>
+      <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{{ '$' + totalSubtotal().toFixed(2) }}</p>
+    </div>
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">IVA recaudado</p>
+      <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{{ '$' + totalIva().toFixed(2) }}</p>
+    </div>
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Ticket promedio</p>
+      <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{{ '$' + averageTicket().toFixed(2) }}</p>
+    </div>
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Artículos vendidos</p>
+      <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{{ itemsSold() }}</p>
+    </div>
+  </div>
+
+  <div class="relative overflow-x-auto shadow-sm sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">#</th>
+          <th scope="col" class="px-6 py-3">Fecha</th>
+          <th scope="col" class="px-6 py-3">Cliente</th>
+          <th scope="col" class="px-6 py-3">Pago</th>
+          <th scope="col" class="px-6 py-3">Total</th>
+          <th scope="col" class="px-6 py-3 text-right">Detalle</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (sale of sales(); track sale.id) {
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">#{{ sale.id }}</td>
+            <td class="px-6 py-4">{{ sale.date | date:'short' }}</td>
+            <td class="px-6 py-4">{{ sale.customer }}</td>
+            <td class="px-6 py-4">{{ sale.paymentMethod }}</td>
+            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{ '$' + sale.total.toFixed(2) }}</td>
+            <td class="px-6 py-4 text-right">
+              <button (click)="toggleDetail(sale)" type="button" class="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                {{ expandedSaleId() === sale.id ? 'Ocultar' : 'Ver' }}
+              </button>
+            </td>
+          </tr>
+          @if (expandedSaleId() === sale.id) {
+            <tr class="bg-gray-50 dark:bg-gray-700/50">
+              <td colspan="6" class="px-6 py-3">
+                <ul class="text-xs space-y-1 max-w-sm">
+                  @for (item of sale.items; track item.Pid) {
+                    <li class="flex justify-between">
+                      <span>{{ item.quantity }}x {{ item.Pname }}</span>
+                      <span>{{ '$' + (item.Pprice * item.quantity).toFixed(2) }}</span>
+                    </li>
+                  }
+                  <li class="flex justify-between pt-1 mt-1 border-t border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300">
+                    <span>Subtotal</span>
+                    <span>{{ '$' + sale.subtotal.toFixed(2) }}</span>
+                  </li>
+                  <li class="flex justify-between text-gray-600 dark:text-gray-300">
+                    <span>IVA (15%)</span>
+                    <span>{{ '$' + sale.iva.toFixed(2) }}</span>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          }
+        } @empty {
+          <tr class="bg-white dark:bg-gray-800">
+            <td colspan="6" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">Todavía no hay ventas registradas.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,17 +1,18 @@
-import { Component, inject, Inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { HttpErrorResponse } from '@angular/common/http';
+
 import { User } from '../interfaces/user';
 import { UserService } from '../services/user.service';
 import { ErrorService } from '../services/error.service';
 
 @Component({
-  selector: 'app-signin',
-  standalone: true,
-  imports: [RouterLink, RouterLinkActive],
-  templateUrl: './signin.component.html',
-  styleUrl: './signin.component.css'
+    selector: 'app-signin',
+    imports: [RouterLink, FormsModule],
+    templateUrl: './signin.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrl: './signin.component.css'
 })
 export class SigninComponent {
   Uemail: string = '';
@@ -48,7 +49,7 @@ export class SigninComponent {
         this.router.navigate(['/dashboard']) 
         localStorage.setItem('myToken',token) 
       },
-      error: (e: HttpErrorResponse) => {
+      error: (e: any) => {
         this.loading =  false
         this._errorService.msgError(e)
       },

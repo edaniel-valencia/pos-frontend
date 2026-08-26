@@ -1,0 +1,82 @@
+<div class="space-y-6">
+  <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Resumen</h1>
+
+  <!-- KPI cards -->
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Ventas hoy</p>
+      <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{{ todaySales().length }}</p>
+    </div>
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Ingresos hoy</p>
+      <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{{ '$' + todayRevenue().toFixed(2) }}</p>
+    </div>
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Productos</p>
+      <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{{ products().length }}</p>
+    </div>
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Clientes</p>
+      <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{{ customers().length }}</p>
+    </div>
+  </div>
+
+  <!-- Caja -->
+  <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Estado de caja</p>
+        @if (cashRegister.isOpen()) {
+          <p class="mt-1 text-lg font-semibold text-green-600 dark:text-green-400">
+            Abierta · Saldo actual {{ '$' + cashRegister.balance().toFixed(2) }}
+          </p>
+        } @else {
+          <p class="mt-1 text-lg font-semibold text-gray-500 dark:text-gray-400">Cerrada</p>
+        }
+      </div>
+      <a routerLink="/dashboard/caja"
+        class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+        Ir a Caja
+      </a>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+    <!-- Stock bajo -->
+    <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Stock bajo</h2>
+      </div>
+      <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+        @for (product of lowStockProducts(); track product.Pid) {
+          <li class="flex items-center justify-between px-4 py-3">
+            <span class="text-sm text-gray-900 dark:text-white">{{ product.Pname }}</span>
+            <span class="text-sm font-medium text-red-600 dark:text-red-400">{{ product.Pstock }} u.</span>
+          </li>
+        } @empty {
+          <li class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">No hay productos con stock bajo.</li>
+        }
+      </ul>
+    </div>
+
+    <!-- Ventas recientes -->
+    <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Ventas recientes</h2>
+      </div>
+      <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+        @for (sale of recentSales(); track sale.id) {
+          <li class="flex items-center justify-between px-4 py-3">
+            <div>
+              <p class="text-sm font-medium text-gray-900 dark:text-white">{{ sale.customer }}</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">{{ sale.date | date:'short' }}</p>
+            </div>
+            <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ '$' + sale.total.toFixed(2) }}</span>
+          </li>
+        } @empty {
+          <li class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">Todavía no hay ventas registradas.</li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>
