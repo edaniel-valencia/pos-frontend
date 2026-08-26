@@ -8,6 +8,18 @@
   Sistema de Punto de Venta moderno construido con <strong>Angular 22</strong>, Tailwind CSS y Flowbite.
 </p>
 
+<p align="center">
+  <a href="https://github.com/edaniel-valencia/login-backend-with-angular">
+    <img src="https://img.shields.io/badge/⬇️_Backend_API-Descargar_aquí-0d6efd?style=for-the-badge&logo=github" alt="Descargar Backend" />
+  </a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Estado-En%20Desarrollo-orange?style=flat-square" alt="Estado del proyecto" />
+  <img src="https://img.shields.io/badge/Angular-22-red?style=flat-square&logo=angular" alt="Angular 22" />
+  <img src="https://img.shields.io/badge/pnpm-11-blueviolet?style=flat-square&logo=pnpm" alt="pnpm" />
+</p>
+
 ---
 
 ## 📸 Capturas de pantalla
@@ -15,13 +27,13 @@
 <p align="center">
   <img src="public/page1.png" alt="Pantalla de inicio de sesión" width="700" />
   <br/>
-  <em>Pantalla de inicio de sesión</em>
+  <em>Pantalla del Dashboard</em>
 </p>
 
 <p align="center">
   <img src="public/page2.png" alt="Dashboard principal" width="700" />
   <br/>
-  <em>Dashboard principal del sistema</em>
+  <em>Pantalla de las Ventas tipo POS</em>
 </p>
 
 ---
@@ -31,6 +43,12 @@
 **POS ADAVAM** es el frontend de un sistema de Punto de Venta (POS) completo, diseñado para gestionar de manera eficiente las operaciones comerciales de un negocio. Permite administrar ventas, productos, categorías, clientes, proveedores, caja y reportes desde una interfaz web moderna, responsiva y segura.
 
 La aplicación se comunica con un backend REST a través de una API, usando JWT para la autenticación y autorización de usuarios.
+
+> [!WARNING]
+> **🚧 Proyecto en desarrollo activo**
+>
+> Actualmente **solo el módulo de autenticación (Login / Registro) está completamente implementado** con su integración al backend.
+> Los demás módulos del dashboard (Ventas, Productos, Categorías, Clientes, Proveedores, Caja, Reportes y Usuarios) son **mockups de interfaz** y aún no tienen lógica de negocio ni conexión con la API. Están pendientes de programación.
 
 ---
 
